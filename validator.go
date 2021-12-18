@@ -86,6 +86,9 @@ func newValidatorImpl(domains []string, usersFile string,
 	}
 
 	validator := func(email string) (valid bool) {
+		if allowAll {
+			return true
+		}
 		if email == "" {
 			return
 		}
@@ -93,9 +96,6 @@ func newValidatorImpl(domains []string, usersFile string,
 		valid = isEmailValidWithDomains(email, domains)
 		if !valid {
 			valid = validUsers.IsValid(email)
-		}
-		if allowAll {
-			valid = true
 		}
 		return valid
 	}
