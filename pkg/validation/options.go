@@ -328,6 +328,8 @@ func parseProviderInfo(o *options.Options, msgs []string) []string {
 				p.JWTKey = signKey
 			}
 		}
+	case *providers.TwitterProvider:
+		p.SetUsers(o.Providers[0].TwitterConfig.Users)
 	}
 	return msgs
 }

@@ -484,6 +484,7 @@ type LegacyProvider struct {
 	GoogleGroups             []string `flag:"google-group" cfg:"google_group"`
 	GoogleAdminEmail         string   `flag:"google-admin-email" cfg:"google_admin_email"`
 	GoogleServiceAccountJSON string   `flag:"google-service-account-json" cfg:"google_service_account_json"`
+	TwitterUsers             []string `flag:"twitter-user" cfg:"twitter_users"`
 
 	// These options allow for other providers besides Google, with
 	// potential overrides.
@@ -533,6 +534,7 @@ func legacyProviderFlagSet() *pflag.FlagSet {
 	flagSet.StringSlice("google-group", []string{}, "restrict logins to members of this google group (may be given multiple times).")
 	flagSet.String("google-admin-email", "", "the google admin to impersonate for api calls")
 	flagSet.String("google-service-account-json", "", "the path to the service account json credentials")
+	flagSet.StringSlice("twitter-user", []string{}, "allow users with these usernames to login (may be given multiple times)")
 	flagSet.String("client-id", "", "the OAuth Client ID: ie: \"123456.apps.googleusercontent.com\"")
 	flagSet.String("client-secret", "", "the OAuth Client Secret")
 	flagSet.String("client-secret-file", "", "the file with OAuth Client Secret")
@@ -688,6 +690,10 @@ func (l *LegacyProvider) convert() (Providers, error) {
 			Groups:             l.GoogleGroups,
 			AdminEmail:         l.GoogleAdminEmail,
 			ServiceAccountJSON: l.GoogleServiceAccountJSON,
+		}
+	case "twitter":
+		provider.TwitterConfig = TwitterOptions{
+			Users: l.TwitterUsers,
 		}
 	}
 

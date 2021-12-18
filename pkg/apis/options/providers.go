@@ -36,6 +36,8 @@ type Provider struct {
 	OIDCConfig OIDCOptions `json:"oidcConfig,omitempty"`
 	// LoginGovConfig holds all configurations for LoginGov provider.
 	LoginGovConfig LoginGovOptions `json:"loginGovConfig,omitempty"`
+	// TwitterConfig holds all configurations for Twitter provider.
+	TwitterConfig TwitterOptions `json:"twitterConfig,omitempty"`
 
 	// ID should be a unique identifier for the provider.
 	// This value is required for all providers.
@@ -173,6 +175,11 @@ type LoginGovOptions struct {
 	JWTKeyFile string `json:"jwtKeyFile,omitempty"`
 	// PubJWKURL is the JWK pubkey access endpoint
 	PubJWKURL string `json:"pubjwkURL,omitempty"`
+}
+
+type TwitterOptions struct {
+	// Users allows users with these usernames to login
+	Users []string `json:"users,omitempty"`
 }
 
 func providerDefaults() Providers {
